@@ -2,19 +2,46 @@
 
 namespace Acme\Bundle\DicWorkshopBundle\Ecb;
 
-class ExchangeRates implements ExchangeRatesInterface
+use Acme\Bundle\DicWorkshopBundle\Adapter\AdapterInterface;
+use Acme\Bundle\DicWorkshopBundle\Parser\ParserInterface;
+
+class ExchangeRates
 {
+    private $adapter;
+    private $parser;
+    private $data;
+
+    public function __construct(AdapterInterface $adapter, ParserInterface $parser)
+    {
+        $this->adapter = $adapter;
+        $this->parser = $parser;
+        $this->data = null;
+    }
+
     public function getRates()
     {
-        // TODO: implement
+        $this->loadData();
 
-        throw new \RuntimeException('Method not implemented.');
+        return $this->data;
     }
 
     public function getRate($currency)
     {
-        // TODO: implement
+        $this->loadData();
 
-        throw new \RuntimeException('Method not implemented.');
+        if (!isset($this->data[$currency])) {
+            throw new \InvalidArgumentException(sprintf('No data for currency %s', $currency));
+        }
+
+        return $this->data[$currency];
+    }
+
+    private function loadData()
+    {
+        if (null === $this->data)
+        {
+            $raw = $this->adapter->getRawData();
+            $this->data = $this->parser->parse($raw);
+        }
     }
 }
