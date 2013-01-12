@@ -4,6 +4,36 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="acme_dic_workshop.httpclient.class">Guzzle\Http\Client</parameter>
+        <parameter key="acme_dic_workshop.adapter.class">Acme\Bundle\DicWorkshopBundle\Adapter\GuzzleAdapter</parameter>
+        <parameter key="acme_dic_workshop.parser.class">Acme\Bundle\DicWorkshopBundle\Parser\XmlParser</parameter>
+        <parameter key="acme_dic_workshop.rates.class">Acme\Bundle\DicWorkshopBundle\Ecb\ExchangeRates</parameter>
+    </parameters>
 
+    <services>
+
+        <service id="acme_dic_workshop.httpclient" class="%acme_dic_workshop.httpclient.class%" public="false">
+            <argument type="constant">null</argument>
+            <argument type="collection">
+                <argument key="curl.options">%acme_dic_workshop.httpclient.curl_options%</argument>
+            </argument>
+        </service>
+
+        <service id="acme_dic_workshop.adapter" class="%acme_dic_workshop.adapter.class%" public="false">
+            <argument type="service" id="acme_dic_workshop.httpclient" />
+            <argument>%acme_dic_workshop.adapter.endpoint%</argument>
+        </service>
+
+        <service id="acme_dic_workshop.parser" class="%acme_dic_workshop.parser.class%" public="false" />
+
+        <service id="acme_dic_workshop.rates" class="%acme_dic_workshop.rates.class%" public="false">
+            <argument type="service" id="acme_dic_workshop.adapter" />
+            <argument type="service" id="acme_dic_workshop.parser" />
+        </service>
+
+        <service id="acme.rates" alias="acme_dic_workshop.rates" />
+
+    </services>
 
 </container>

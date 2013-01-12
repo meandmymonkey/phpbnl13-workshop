@@ -21,3 +21,8 @@ monolog:
 
 assetic:
     use_controller: true
+
+acme_dic_workshop:
+    exchange_rates:
+        curl:
+            CURLOPT_PROXY: http://localhost:8888

@@ -8,5 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class AcmeDicWorkshopBundle extends Bundle
 {
-
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new GuzzleSubscriberPass());
+    }
 }
