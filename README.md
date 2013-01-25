@@ -36,3 +36,8 @@ Use Composer to install vendor libraries:
     $ php app/check.php
 
 Everything in the "Mandatory requirements" section of the output should be flagged as OK.
+
+Notes
+-----
+
+This exercise is command line only - there is no valid controller to use in a web environment.
