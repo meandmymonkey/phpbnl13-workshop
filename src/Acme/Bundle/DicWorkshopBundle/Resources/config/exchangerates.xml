@@ -6,7 +6,12 @@
 
     <services>
 
-        <service id="acme_dic.rates.adapter.client" class="Guzzle\Http\Client" />
+        <service id="acme_dic.rates.adapter.client" class="Guzzle\Http\Client">
+            <argument></argument>
+            <argument type="collection">
+                <argument key="curl.options">%acme_dic.rates.adapter.client.curl_options%</argument>
+            </argument>
+        </service>
 
         <service id="acme_dic.rates.adapter"
                  class="Acme\Bundle\DicWorkshopBundle\Adapter\GuzzleAdapter"

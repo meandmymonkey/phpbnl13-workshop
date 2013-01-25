@@ -33,6 +33,19 @@ class Configuration implements ConfigurationInterface
                         ->thenInvalid('The endpoint must be a valid URL.')
                     ->end()
                 ->end()
+                ->arrayNode('curl')
+                    ->info('sets curl options')
+                        ->useAttributeAsKey('name')
+                    ->prototype('scalar')
+                    ->end()
+                    ->validate()
+                        ->ifTrue(function($value) {
+                            $validOptions = array('CURLOPT_PROXY', 'CURLOPT_TIMEOUT');
+                            return count(array_intersect($validOptions, array_keys($value))) > count($validOptions);
+                        })
+                        ->thenInvalid('Valid curl options are CURLOPT_PROXY and CURLOPT_TIMEOUT.')
+                    ->end()
+                ->end()
             ->end()
         ;
 

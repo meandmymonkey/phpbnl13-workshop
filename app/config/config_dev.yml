@@ -23,4 +23,6 @@ assetic:
     use_controller: true
 
 acme_dic_workshop:
-    endpoint: http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml
+    curl:
+        CURLOPT_TIMEOUT: 10
+        CURLOPT_PROXY: http://localhost:8888
