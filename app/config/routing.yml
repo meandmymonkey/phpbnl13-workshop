@@ -1,5 +1,0 @@
-acme_dic_workshop:
-    resource: "@AcmeDicWorkshopBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
