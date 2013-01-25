@@ -37,6 +37,15 @@ Use Composer to install vendor libraries:
 
 Everything in the "Mandatory requirements" section of the output should be flagged as OK.
 
+4. Try it
+---------
+
+Calling
+
+    $ php app/console ecb:exchangerates
+
+should now list current exchange rates on the command line.
+
 Notes
 -----
 
